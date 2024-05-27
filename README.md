@@ -27,7 +27,7 @@ Go to project root and execute the following command in console to get the requi
 flutter pub get 
 ```
 
-**Step 3: APPS**
+**Step 3: APP**
 
 This project uses `build_runner` package that works with code generation, execute the following command to generate files:
 
@@ -35,7 +35,21 @@ This project uses `build_runner` package that works with code generation, execut
 flutter pub run build_runner watch --delete-conflicting-outputs
 ```
 
-**Step 4: WEB**
+**Step 4: APP**
+
+This project supports web. Execute the following command to run the project in the web:
+
+```
+flutter run -d chrome
+```
+
+But it is optimized for mobile apps. Execute the following command to run the project in the device or simulator:
+
+```
+flutter run
+```
+
+**Step 5: WEB**
 
 Go to project root and execute the following command in console to get the required dependencies: 
 
@@ -43,7 +57,7 @@ Go to project root and execute the following command in console to get the requi
 NPM install 
 ```
 
-**Step 5: WEB**
+**Step 6: WEB**
 
 This project uses `angular-material` package. Execute the following command to run the project:
 
@@ -51,7 +65,7 @@ This project uses `angular-material` package. Execute the following command to r
 ng serve --open --browser chrome --port 4300
 ```
 
-**Step 6: API**
+**Step 7: API**
 
 Go to project root and execute the following command in console to get the required dependencies: 
 
@@ -59,7 +73,7 @@ Go to project root and execute the following command in console to get the requi
 NPM install 
 ```
 
-**Step 7: API**
+**Step 8: API**
 
 This project uses `nodemon` package, execute the following command to run the project:
 
