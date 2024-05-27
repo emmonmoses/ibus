@@ -54,7 +54,7 @@ const login = async (req, res, model) => {
   await createActivityLog(moduleName, action, person);
 
   if (user.code.startsWith("AD")) {
-    // SYSTEM USER
+    // ADMIN
     return res.status(res.statusCode).json({
       loginStatus: loginStatus,
       id: user._id,
@@ -71,13 +71,13 @@ const login = async (req, res, model) => {
         token: jsontoken,
       },
     });
-  } else if (user.code.startsWith("AG")) {
-    // AGENT
+  } else if (user.code.startsWith("DR")) {
+    // DRIVER
     return res.status(res.statusCode).json({
       loginStatus: loginStatus,
       id: user._id,
       name: user.name,
-      agent: user.code,
+      driver: user.code,
       avatar: user.avatar,
       username: user.email,
       role: role.name,
@@ -90,7 +90,7 @@ const login = async (req, res, model) => {
       },
     });
   } else {
-    // CUSTOMER
+    // CUSTOMER or PARENT
     return res.status(res.statusCode).json({
       loginStatus: loginStatus,
       id: user._id,
