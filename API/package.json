@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/emmonmoses/ibus.git"
   },
-  "author": "emmon moses",
+  "author": "ibus team",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/emmonmoses/ibus/issues"
