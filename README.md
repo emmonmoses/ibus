@@ -78,5 +78,9 @@ npm install
 This project uses `nodemon` package, execute the following command to run the project:
 
 ```
-nodemon app.js
+npm start -- run in production mode
+```
+
+```
+npm run dev -- run in development mode
 ```
