@@ -6,16 +6,10 @@ const customerSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Role",
     },
-    firstName: {
-      type: String,
-    },
-    middleName: {
-      type: String,
-    },
-    lastName: {
-      type: String,
-    },
     code: {
+      type: String,
+    },
+    name: {
       type: String,
     },
     email: {
@@ -39,29 +33,13 @@ const customerSchema = new mongoose.Schema(
       country: {
         type: String,
       },
-      state: {
-        type: String,
-      },
-      district: {
-        type: String,
-      },
-      street: {
+      region: {
         type: String,
       },
     },
     status: {
       type: Number,
       default: 1,
-    },
-    registeredDate: {
-      type: Date,
-    },
-    lastContactedDate: {
-      type: Date,
-    },
-    customerScore: {
-      type: Number,
-      default: 0,
     },
     createdAt: {
       type: Date,

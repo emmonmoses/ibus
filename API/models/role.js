@@ -41,11 +41,4 @@ roleSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 
-roleSchema.virtual("agent", {
-  ref: "Agent",
-  localField: "agentId",
-  foreignField: "_id",
-  justOne: true,
-});
-
 module.exports = mongoose.model("Role", roleSchema);
