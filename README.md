@@ -8,7 +8,7 @@ Some UI may still not work correctly in IOS. Clone the appropriate branch below:
 
 * For App: muluken
 * For Web: dawit
-* For Api: usman or emmon
+* For Api: usman
 
 ## How to Use 
 **Step 1:**
