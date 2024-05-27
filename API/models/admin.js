@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const systemUserSchema = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
   {
     code: {
       type: String,
@@ -55,17 +55,17 @@ const systemUserSchema = new mongoose.Schema(
 );
 
 // Add a unique compound index for username and name
-systemUserSchema.index({ username: 1, name: 1 }, { unique: true });
+adminSchema.index({ username: 1, name: 1 }, { unique: true });
 
-systemUserSchema.virtual("id").get(function () {
+adminSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 
-systemUserSchema.virtual("role", {
+adminSchema.virtual("role", {
   ref: "Role",
   localField: "roleId",
   foreignField: "_id",
   justOne: true,
 });
 
-module.exports = mongoose.model("SystemUser", systemUserSchema);
+module.exports = mongoose.model("Administrator", adminSchema);

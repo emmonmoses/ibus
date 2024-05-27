@@ -94,7 +94,7 @@ const login = async (req, res, model) => {
     return res.status(res.statusCode).json({
       loginStatus: loginStatus,
       id: user._id,
-      name: user.firstName + " " + user.middleName + " " + user.lastName,
+      name: user.name,
       customer: user.code,
       username: user.email,
       role: role.name,

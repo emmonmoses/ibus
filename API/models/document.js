@@ -10,8 +10,7 @@ const documentSchema = new mongoose.Schema(
       default: 1,
     },
     type: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "AgentType",
+      type: String, // Customer or Parent or Driver
     },
     createdAt: {
       type: Date,
