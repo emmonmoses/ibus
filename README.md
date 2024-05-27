@@ -54,7 +54,7 @@ flutter run
 Go to project root and execute the following command in console to get the required dependencies: 
 
 ```
-NPM install 
+npm install 
 ```
 
 **Step 6: WEB**
@@ -70,7 +70,7 @@ ng serve --open --browser chrome --port 4300
 Go to project root and execute the following command in console to get the required dependencies: 
 
 ```
-NPM install 
+npm install 
 ```
 
 **Step 8: API**
