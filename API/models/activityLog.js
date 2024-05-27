@@ -9,7 +9,7 @@ const logSchema = new mongoose.Schema(
     action: {
       type: String,
     },
-    userId: {
+    actionBy: {
       type: String,
       require: true,
     },

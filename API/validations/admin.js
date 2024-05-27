@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const systemUserValidation = (data) => {
+const adminValidation = (data) => {
   const schema = Joi.object({
     fullname: Joi.string().required(),
     username: Joi.string().min(4).required().email(),
@@ -21,4 +21,4 @@ const systemUserValidation = (data) => {
   return schema.validate(data);
 };
 
-module.exports.systemUserValidation = systemUserValidation;
+module.exports.adminValidation = adminValidation;
