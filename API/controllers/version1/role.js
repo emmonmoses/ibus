@@ -49,7 +49,6 @@ module.exports = {
       const { pagination, skip } = await PaginationUtiliy.paginationParams(
         req,
         totalrole,
-        10
       );
 
       if (pagination.page > pagination.pages) {
