@@ -2,7 +2,6 @@
 const Role = require("../../models/role");
 // const Phone = require("../../models/phone");
 const Administrator = require("../../models/admin");
-const Pagination = require("../../models/pagination");
 
 // VALIDATIONS
 const { adminValidation } = require("../../validations/admin");
@@ -82,7 +81,7 @@ module.exports = {
       const totalUsers = await Administrator.countDocuments();
       const { pagination, skip } = await PaginationUtiliy.paginationParams(
         req,
-        totalUsers,
+        totalUsers
       );
 
       if (pagination.page > pagination.pages) {
@@ -130,17 +129,11 @@ module.exports = {
       }
 
       const roleId = role._id;
-      const pagination = new Pagination({});
-      const totalUsers = await Administrator.countDocuments({
-        roleId: roleId,
-      });
-
-      pagination.page = parseInt(req.query.page);
-      pagination.pageSize = parseInt(req.query.pageSize) || 10;
-      pagination.rows = totalUsers;
-
-      const skip = (pagination.page - 1) * pagination.pageSize;
-      pagination.pages = Math.ceil(totalUsers / pagination.pageSize);
+      const totalUsers = await Administrator.countDocuments({ roleId: roleId });
+      const { pagination, skip } = await PaginationUtiliy.paginationParams(
+        req,
+        totalUsers
+      );
 
       if (pagination.page > pagination.pages) {
         return Response.customResponse(
@@ -172,15 +165,9 @@ module.exports = {
         permissions: item.role ? item.role.claims : null,
       }));
 
-      return res.status(res.statusCode).json({
-        page: pagination.page,
-        pages: pagination.pages,
-        pageSize: pagination.pageSize,
-        rows: pagination.rows,
-        data: pagination.data,
-      });
+      return Response.paginationResponse(res, res.statusCode, pagination);
     } catch (err) {
-      return Response.errorResponse(res, 500, err.message);
+      return Response.errorResponse(res, 500, err);
     }
   },
 
