@@ -12,17 +12,17 @@ router.post("/", adminController.create);
 
 router.use(bearerToken);
 
+router.post(
+  "/upload/:code",
+  uploadUtility.uploadAvatar(destination),
+  uploadUtility.uploadImage
+);
+
 router.get("/:id", adminController.get);
 router.get("/", adminController.getUsers);
 router.patch("/", adminController.update);
 router.delete("/:id/:userId", adminController.delete);
 router.get("/role/:id", adminController.getUsersByRole);
 router.patch("/change/password", adminController.changePassword);
-
-router.post(
-  "/upload/:code",
-  uploadUtility.uploadAvatar(destination),
-  uploadUtility.uploadImage
-);
 
 module.exports = router;

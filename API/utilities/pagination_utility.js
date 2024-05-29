@@ -1,7 +1,8 @@
 const Pagination = require("../models/pagination");
 
 module.exports = {
-  paginationParams: async (req, totalItems, defaultPageSize = 10) => {
+  paginationParams: async (req, totalItems) => {
+    const defaultPageSize = 10
     const pagination = new Pagination({});
 
     pagination.page = parseInt(req.query.page) || 1;
