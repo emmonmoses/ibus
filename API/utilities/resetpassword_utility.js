@@ -8,6 +8,7 @@ const resetPassword = async (req, res, model, moduleName) => {
   try {
     const body = req.body;
     var user = await model.findOne({ email: body.email });
+    console.log(user);
 
     if (!user) {
       return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
