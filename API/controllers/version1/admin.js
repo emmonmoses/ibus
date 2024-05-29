@@ -1,7 +1,7 @@
 // MODELS
 const Role = require("../../models/role");
+// const Phone = require("../../models/phone");
 const Administrator = require("../../models/admin");
-const Pagination = require("../../models/pagination");
 
 // VALIDATIONS
 const { adminValidation } = require("../../validations/admin");
@@ -44,14 +44,19 @@ module.exports = {
         return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
       }
 
+      // const phone = new Phone({});
+      // phone.code = body.phone.code;
+      // phone.number = body.phone.number;
+
       const uniqueCode = unique.randomCode();
       const hashedPassword = unique.passwordHash(body.password);
 
       const user = new Administrator({
         code: "AD" + uniqueCode,
-        fullName: body.fullname,
+        name: body.name,
         roleId: body.roleId,
         status: body.status,
+        // phone: phone,
         avatar: body.avatar,
         email: body.username,
         password: hashedPassword,
@@ -76,8 +81,7 @@ module.exports = {
       const totalUsers = await Administrator.countDocuments();
       const { pagination, skip } = await PaginationUtiliy.paginationParams(
         req,
-        totalUsers,
-        10
+        totalUsers
       );
 
       if (pagination.page > pagination.pages) {
@@ -125,17 +129,11 @@ module.exports = {
       }
 
       const roleId = role._id;
-      const pagination = new Pagination({});
-      const totalUsers = await Administrator.countDocuments({
-        roleId: roleId,
-      });
-
-      pagination.page = parseInt(req.query.page);
-      pagination.pageSize = parseInt(req.query.pageSize) || 10;
-      pagination.rows = totalUsers;
-
-      const skip = (pagination.page - 1) * pagination.pageSize;
-      pagination.pages = Math.ceil(totalUsers / pagination.pageSize);
+      const totalUsers = await Administrator.countDocuments({ roleId: roleId });
+      const { pagination, skip } = await PaginationUtiliy.paginationParams(
+        req,
+        totalUsers
+      );
 
       if (pagination.page > pagination.pages) {
         return Response.customResponse(
@@ -167,15 +165,9 @@ module.exports = {
         permissions: item.role ? item.role.claims : null,
       }));
 
-      return res.status(res.statusCode).json({
-        page: pagination.page,
-        pages: pagination.pages,
-        pageSize: pagination.pageSize,
-        rows: pagination.rows,
-        data: pagination.data,
-      });
+      return Response.paginationResponse(res, res.statusCode, pagination);
     } catch (err) {
-      return Response.errorResponse(res, 500, err.message);
+      return Response.errorResponse(res, 500, err);
     }
   },
 
@@ -221,7 +213,7 @@ module.exports = {
         return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
       }
 
-      user.fullName = body.fullname || user.fullName;
+      user.name = body.name || user.name;
       user.avatar = body.avatar || user.avatar;
       user.roleId = body.roleId || user.roleId;
       user.status = body.status;
@@ -267,14 +259,15 @@ module.exports = {
   },
 
   changePassword: async (req, res) => {
-    await changePassword(req, res, SystemUser, moduleName);
+    await changePassword(req, res, Administrator, moduleName);
   },
 
   resetPassword: async (req, res) => {
-    await resetPassword(req, res, SystemUser, moduleName);
+    await resetPassword(req, res, Administrator, moduleName);
   },
 
   login: async (req, res) => {
-    await login(req, res, SystemUser);
+    console.log(req);
+    await login(req, res, Administrator);
   },
 };
