@@ -34,18 +34,17 @@ module.exports = {
             const existingUser = await Customer.findOne({
                 email: body.username,
                 name: body.name,
-                //phone: body.phone
             });
 
             if (existingUser) {
                 return Response.customResponse(res, 409, ResponseMessage.DATA_EXISTS);
             }
 
-            // const role = await Role.findById(body.roleId);
+            const role = await Role.findById(body.roleId);
 
-            // if (!role) {
-            //     return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
-            // }
+            if (!role) {
+                return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
+            }
 
             const uniqueCode = unique.randomCode();
             const hashedPassword = unique.passwordHash(body.password);
@@ -61,7 +60,7 @@ module.exports = {
             address.region = body.address.region;
 
             const customer = new Customer({
-                //roleId: body.roleId,
+                roleId: body.roleId,
                 code: "C" + uniqueCode,
                 name: body.name,
                 email: body.email,
@@ -102,7 +101,7 @@ module.exports = {
             }
 
             pagination.data = await Customer.find()
-                //.populate({ path: "role", select: "name claims" })
+                .populate({ path: "role", select: "name claims" })
                 .select("-password")
                 .sort({ _id: -1 })
                 .skip(skip)
@@ -116,11 +115,11 @@ module.exports = {
                 );
             }
 
-            //   pagination.data = pagination.data.map((item) => ({
-            //     ...item.toJSON(),
-            //     role: item.role ? item.role.name : null,
-            //     permissions: item.role ? item.role.claims : null,
-            //   }));
+            pagination.data = pagination.data.map((item) => ({
+                ...item.toJSON(),
+                role: item.role ? item.role.name : null,
+                permissions: item.role ? item.role.claims : null,
+            }));
 
             return Response.paginationResponse(res, res.statusCode, pagination);
         } catch (err) {
@@ -131,13 +130,13 @@ module.exports = {
     get: async (req, res) => {
         try {
             const customer = await Customer.findById(req.params.id)
-                .select("-password");
-            // .populate([
-            //   {
-            //     path: "role",
-            //     select: "name claims",
-            //   },
-            // ]);
+                .select("-password")
+                .populate([
+                    {
+                        path: "role",
+                        select: "name claims",
+                    },
+                ]);
 
             if (!customer) {
                 return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
@@ -163,6 +162,8 @@ module.exports = {
                 createdAt: customer.createdAt,
                 updatedAt: customer.updatedAt,
                 id: customer._id,
+                role: customer.role ? customer.role.name : null,
+                permissions: customer.role ? customer.role.claims : null,
             };
 
             return Response.successResponse(res, res.statusCode, customerData);
