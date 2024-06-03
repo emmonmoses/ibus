@@ -34,7 +34,7 @@ module.exports = {
       const newPriviledge = await priviledge.save();
 
       const action = `New ${moduleName}`;
-      const person = req.body.createdBy;
+      const person = roleData.actionBy;
       await createActivityLog(moduleName, action, person);
 
       return Response.successResponse(res, res.statusCode, newPriviledge);

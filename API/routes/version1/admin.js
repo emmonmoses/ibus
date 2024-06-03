@@ -5,10 +5,10 @@ const adminController = require("../../controllers/version1/admin");
 
 let destination = `uploads/systemusers/`;
 
+router.post("/", adminController.create);
 router.post("/login", adminController.login);
 router.patch("/forgot/password", adminController.resetPassword);
 router.get("/image/:code/:avatar", uploadUtility.getImage(destination));
-router.post("/", adminController.create);
 
 router.use(bearerToken);
 
