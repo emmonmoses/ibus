@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514557863535",
+    "project_id": "Weyeyet-16403",
+    "storage_bucket": "Weyeyet-16403.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514557863535:android:3d7910e53688ea66e50f9a",
+        "android_client_info": {
+          "package_name": "com.example.Weyeyet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqkaikRSf0qTWM8UDKs__1sZHPUFBOqjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
