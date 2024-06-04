@@ -122,11 +122,11 @@ class _HeaderPartsState extends State<HeaderParts> {
   }
 
   Padding title() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Text(
             "Hi Customer",
             style: TextStyle(

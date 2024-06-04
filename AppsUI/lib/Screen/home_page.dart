@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     const HomeScreen(),
     MyTripHistoryPage(trip: tripsItems[0]), // Pass a TripDetail object here
-    AccountScreen(),
+    const AccountScreen(),
   ];
 
   void onTabTapped(int index) {

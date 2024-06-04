@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Weyeyet/Screen/home_page.dart';
@@ -122,7 +124,7 @@ class _VerificationState extends State<Verification> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                 child: _isLoading
-                    ? Container(
+                    ? SizedBox(
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
