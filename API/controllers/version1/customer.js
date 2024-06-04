@@ -58,17 +58,17 @@ module.exports = {
       address.country = body.address.country;
       address.region = body.address.region;
 
-            const customer = new Customer({
-                roleId: body.roleId,
-                code: "CU" + uniqueCode,
-                name: body.name,
-                email: body.email,
-                password: hashedPassword,
-                phone: phone,
-                address: address,
-                createdAt: DateUtil.currentDate(),
-                updatedAt: DateUtil.currentDate(),
-            });
+      const customer = new Customer({
+        roleId: body.roleId,
+        code: "CU" + uniqueCode,
+        name: body.name,
+        email: body.email,
+        password: hashedPassword,
+        phone: phone,
+        address: address,
+        createdAt: DateUtil.currentDate(),
+        updatedAt: DateUtil.currentDate(),
+      });
 
       const newCustomer = await customer.save();
 
