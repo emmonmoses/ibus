@@ -91,7 +91,7 @@ module.exports = {
         password: hashedPassword,
         phone: phone,
         address: address,
-        createdAt: DateUtil.currentDate(),
+        createdAt: DateUtil.currentDate().add(3, "hours"),
       });
 
       const newPilot = await pilot.save();
