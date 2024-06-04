@@ -31,20 +31,20 @@ module.exports = {
         return Response.sendValidationErrorMessage(res, 400, error);
       }
 
-            const existingUser = await Customer.findOne({
-                email: body.username,
-                name: body.name,
-            });
+      const existingUser = await Customer.findOne({
+        email: body.username,
+        name: body.name,
+      });
 
       if (existingUser) {
         return Response.customResponse(res, 409, ResponseMessage.DATA_EXISTS);
       }
 
-            const role = await Role.findById(body.roleId);
+      const role = await Role.findById(body.roleId);
 
-            if (!role) {
-                return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
-            }
+      if (!role) {
+        return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
+      }
 
       const uniqueCode = unique.randomCode();
       const hashedPassword = unique.passwordHash(body.password);
@@ -72,7 +72,7 @@ module.exports = {
 
       const newCustomer = await customer.save();
 
-      const action = `New ${moduleName} - ${"AD" + uniqueCode}`;
+      const action = `New ${moduleName} - ${"C" + uniqueCode}`;
       const person = body.actionBy;
 
       await createActivityLog(moduleName, action, person);
@@ -99,12 +99,12 @@ module.exports = {
         );
       }
 
-            pagination.data = await Customer.find()
-                .populate({ path: "role", select: "name claims" })
-                .select("-password")
-                .sort({ _id: -1 })
-                .skip(skip)
-                .limit(pagination.pageSize);
+      pagination.data = await Customer.find()
+        .populate({ path: "role", select: "name claims" })
+        .select("-password")
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(pagination.pageSize);
 
       if (totalCustomers === 0) {
         return Response.customResponse(
@@ -114,11 +114,11 @@ module.exports = {
         );
       }
 
-            pagination.data = pagination.data.map((item) => ({
-                ...item.toJSON(),
-                role: item.role ? item.role.name : null,
-                permissions: item.role ? item.role.claims : null,
-            }));
+      pagination.data = pagination.data.map((item) => ({
+        ...item.toJSON(),
+        role: item.role ? item.role.name : null,
+        permissions: item.role ? item.role.claims : null,
+      }));
 
       return Response.paginationResponse(res, res.statusCode, pagination);
     } catch (err) {
@@ -126,16 +126,16 @@ module.exports = {
     }
   },
 
-    get: async (req, res) => {
-        try {
-            const customer = await Customer.findById(req.params.id)
-                .select("-password")
-                .populate([
-                    {
-                        path: "role",
-                        select: "name claims",
-                    },
-                ]);
+  get: async (req, res) => {
+    try {
+      const customer = await Customer.findById(req.params.id)
+        .select("-password")
+        .populate([
+          {
+            path: "role",
+            select: "name claims",
+          },
+        ]);
 
       if (!customer) {
         return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
@@ -150,19 +150,19 @@ module.exports = {
       address.country = customer.address.country;
       address.region = customer.address.region;
 
-            const customerData = {
-                phone: phone,
-                address: address,
-                code: customer.code,
-                name: customer.name,
-                email: customer.email,
-                status: customer.status,
-                createdAt: customer.createdAt,
-                updatedAt: customer.updatedAt,
-                id: customer._id,
-                role: customer.role ? customer.role.name : null,
-                permissions: customer.role ? customer.role.claims : null,
-            };
+      const customerData = {
+        phone: phone,
+        address: address,
+        code: customer.code,
+        name: customer.name,
+        email: customer.email,
+        status: customer.status,
+        createdAt: customer.createdAt,
+        updatedAt: customer.updatedAt,
+        id: customer._id,
+        role: customer.role ? customer.role.name : null,
+        permissions: customer.role ? customer.role.claims : null,
+      };
 
       return Response.successResponse(res, res.statusCode, customerData);
     } catch (err) {
