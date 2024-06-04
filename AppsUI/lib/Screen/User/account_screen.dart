@@ -3,6 +3,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:Weyeyet/utilities/app_theme.dart';
 
 class AccountScreen extends StatelessWidget {
+  const AccountScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,9 +17,9 @@ class AccountScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 30),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     CircleAvatar(
                       maxRadius: 65,
                       backgroundImage: AssetImage("assets/images/usman.jpg"),
@@ -25,9 +27,9 @@ class AccountScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text(
                       "Usman Umer",
                       style: TextStyle(
@@ -38,9 +40,9 @@ class AccountScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 15),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text(
                       "Software Developer @Appliedline",
                       style: TextStyle(fontSize: 20),

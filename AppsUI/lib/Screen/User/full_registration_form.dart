@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:io';
 import 'package:Weyeyet/utilities/app_theme.dart';
 import 'package:animate_do/animate_do.dart';

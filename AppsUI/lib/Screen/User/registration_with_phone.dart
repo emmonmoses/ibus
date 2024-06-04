@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, unused_element
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -241,7 +243,7 @@ class _RegisterWithPhoneNumberState extends State<RegisterWithPhoneNumber> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   child: _isLoading
-                      ? Container(
+                      ? SizedBox(
                           width: 20,
                           height: 20,
                           child: CircularProgressIndicator(
