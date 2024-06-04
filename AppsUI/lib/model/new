@@ -1,0 +1,176 @@
+class DriverDetail {
+  final String name;
+  final String phoneNumber;
+  final String image;
+
+  DriverDetail({
+    required this.name,
+    required this.phoneNumber,
+    required this.image,
+  });
+}
+
+class TripDetail {
+  String id;
+  String image;
+  String name;
+  double price;
+  String pickup;
+  String dropoff;
+  int availableSeats;
+  String drivingTime;
+  String route;
+  List<String> stops;
+  String vehicleType;
+  String driverName;
+  String startTime;
+  final DriverDetail driverDetail;
+  final String paymentStatus;
+
+  TripDetail({
+    required this.id,
+    required this.image,
+    required this.name,
+    required this.price,
+    required this.pickup,
+    required this.dropoff,
+    required this.availableSeats,
+    required this.drivingTime,
+    required this.route,
+    required this.stops,
+    required this.vehicleType,
+    required this.driverName,
+    required this.startTime,
+    required this.driverDetail,
+    required this.paymentStatus,
+  });
+}
+
+List<TripDetail> tripsItems = [
+  TripDetail(
+    id: '1',
+    image: 'assets/images/car.png',
+    name: 'Bole - 4 Kilo',
+    price: 12,
+    pickup: 'Bole',
+    dropoff: '4 kilo',
+    availableSeats: 1,
+    drivingTime: '20min',
+    route: 'Route 1',
+    stops: ['Stop 1', 'Stop 2'],
+    vehicleType: 'Van',
+    driverName: 'John Doe',
+    startTime: '8:00 am',
+    driverDetail: DriverDetail(
+      name: 'John Doe',
+      phoneNumber: '+1234567890',
+      image: 'assets/images/usman.jpg',
+    ),
+    paymentStatus: 'Paid',
+  ),
+  TripDetail(
+    id: '2',
+    image: 'assets/images/car.png',
+    name: 'Bole - Mexico',
+    price: 20,
+    pickup: 'Bole',
+    dropoff: 'Mexico',
+    availableSeats: 2,
+    drivingTime: '30min',
+    route: 'Route 2',
+    stops: ['Stop 3', 'Stop 4'],
+    vehicleType: 'Minibus',
+    driverName: 'Jane Smith',
+    startTime: '8:00 am',
+    driverDetail: DriverDetail(
+      name: 'John Doe',
+      phoneNumber: '+1234567890',
+      image: 'assets/images/usman.jpg',
+    ),
+    paymentStatus: 'Paid',
+  ),
+  TripDetail(
+    id: '3',
+    image: 'assets/images/car.png',
+    name: 'Piassa - Gerji',
+    price: 12,
+    pickup: 'Bole',
+    dropoff: 'Gerji',
+    availableSeats: 3,
+    drivingTime: '15min',
+    route: 'Route 3',
+    stops: ['Stop 5', 'Stop 6'],
+    vehicleType: 'SUV',
+    driverName: 'Mike Johnson',
+    startTime: '8:00 am',
+    driverDetail: DriverDetail(
+      name: 'John Doe',
+      phoneNumber: '+1234567890',
+      image: 'assets/images/usman.jpg',
+    ),
+    paymentStatus: 'Paid',
+  ),
+  TripDetail(
+    id: '4',
+    image: 'assets/images/car.png',
+    name: 'Bole - Hayat',
+    price: 30,
+    pickup: 'Bole',
+    dropoff: 'Hayat',
+    availableSeats: 4,
+    drivingTime: '08min',
+    route: 'Route 4',
+    stops: ['Stop 7', 'Stop 8'],
+    vehicleType: 'Sedan',
+    driverName: 'Emily Davis',
+    startTime: '8:00 am',
+    driverDetail: DriverDetail(
+      name: 'John Doe',
+      phoneNumber: '+1234567890',
+      image: 'assets/images/usman.jpg',
+    ),
+    paymentStatus: 'Paid',
+  ),
+  TripDetail(
+    id: '5',
+    image: "assets/images/car.png",
+    name: 'Bole - CMC',
+    price: 50,
+    pickup: 'Bole',
+    dropoff: 'CMC',
+    availableSeats: 9,
+    drivingTime: '05min',
+    route: 'Route 5',
+    stops: ['Stop 9', 'Stop 10'],
+    vehicleType: 'Hatchback',
+    driverName: 'Sarah Lee',
+    startTime: '8:00 am',
+    driverDetail: DriverDetail(
+      name: 'John Doe',
+      phoneNumber: '+1234567890',
+      image: 'assets/images/usman.jpg',
+    ),
+    paymentStatus: 'Paid',
+  ),
+  TripDetail(
+    id: '6',
+    image: "assets/images/car.png",
+    name: 'Bole - Piassa',
+    price: 05,
+    pickup: 'Bole',
+    dropoff: 'Piassa',
+    availableSeats: 3,
+    drivingTime: '55min',
+    route: 'Route 6',
+    stops: ['Stop 11', 'Stop 12'],
+    vehicleType: 'Convertible',
+    driverName: 'David Brown',
+    startTime: '8:00 am',
+    driverDetail: DriverDetail(
+      name: 'John Doe',
+      phoneNumber: '+1234567890',
+      image: 'assets/images/usman.jpg',
+    ),
+    paymentStatus: 'Paid',
+  ),
+];
