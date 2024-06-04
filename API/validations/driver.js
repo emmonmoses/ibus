@@ -24,6 +24,7 @@ const driverValidation = (data) => {
       country: Joi.string().required(),
       region: Joi.string().required(""),
     }),
+    actionBy: Joi.string().allow(""),
   });
   return schema.validate(data);
 };
