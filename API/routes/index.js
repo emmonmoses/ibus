@@ -9,11 +9,13 @@ const userRouter = require("./version1/admin");
 const vehicleRouter = require("./version1/vehicle");
 const customerRouter = require("./version1/customer");
 const locationRouter = require("./version1/location");
+const companyRouter = require("./version1/company");
 
 router.use(`/v${version}/roles`, roleRouter);
 router.use(`/v${version}/users`, userRouter);
 router.use(`/v${version}/vehicles`, vehicleRouter);
 router.use(`/v${version}/customer`, customerRouter);
 router.use(`/v${version}/locations`, locationRouter);
+router.use(`/v${version}/company`, companyRouter);
 
 module.exports = router;
