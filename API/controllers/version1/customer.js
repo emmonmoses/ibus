@@ -60,7 +60,7 @@ module.exports = {
 
             const customer = new Customer({
                 roleId: body.roleId,
-                code: "C" + uniqueCode,
+                code: "CU" + uniqueCode,
                 name: body.name,
                 email: body.email,
                 password: hashedPassword,
