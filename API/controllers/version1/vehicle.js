@@ -36,13 +36,16 @@ module.exports = {
         vehicleType: body.vehicleType,
         vehicleModel: body.vehicleModel,
         vehicleCapacity: body.vehicleCapacity,
+        vehicleRegistration: body.vehicleRegistration,
         status: body.status,
         createdAt: DateUtil.currentDate(),
       });
 
       const newArea = await vehicles.save();
 
-      const action = `New ${moduleName} - ${body.vehicleType + ":" + body.vehicleCapacity}`;
+      const action = `New ${moduleName} - ${
+        body.vehicleType + ":" + body.vehicleCapacity
+      }`;
       const person = body.actionBy;
 
       await createActivityLog(moduleName, action, person);
@@ -178,13 +181,16 @@ module.exports = {
       vehicles.vehicleModel = body.vehicleModel || vehicles.vehicleModel;
       vehicles.vehicleCapacity =
         body.vehicleCapacity || vehicles.vehicleCapacity;
+      body.vehicleRegistration || vehicles.vehicleRegistration;
       vehicles.status = body.status;
       vehicles.actionBy = body.actionBy || vehicles.actionBy;
       vehicles.updatedAt = DateUtil.currentDate();
 
       const updatedVehicle = await vehicles.save();
 
-      const action = `Updated ${moduleName} - ${vehicles.vehicleType + ":" + vehicles.vehicleCapacity}`;
+      const action = `Updated ${moduleName} - ${
+        vehicles.vehicleType + ":" + vehicles.vehicleCapacity
+      }`;
       const person = body.actionBy;
 
       await createActivityLog(moduleName, action, person);
