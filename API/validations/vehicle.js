@@ -3,8 +3,9 @@ const Joi = require("joi");
 const vehicleValidation = (data) => {
   const schema = Joi.object({
     vehicleType: Joi.string().required(),
-    vehicleModel: Joi.string().required(""),
-    vehicleCapacity: Joi.number(),
+    vehicleModel: Joi.string().required(),
+    vehicleCapacity: Joi.number().required(),
+    vehicleCapacity: Joi.string().required(),
     status: Joi.bool(),
     actionBy: Joi.string().allow(""),
   });
