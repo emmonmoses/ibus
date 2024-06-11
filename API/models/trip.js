@@ -12,6 +12,14 @@ const tripSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Vehicle",
     },
+    tripTypeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TripType",
+    },
+    timingId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Timing",
+    },
     locationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
@@ -94,6 +102,20 @@ tripSchema.virtual("role", {
 tripSchema.virtual("vehicle", {
   ref: "Vehicle",
   localField: "vehicleId",
+  foreignField: "_id",
+  justOne: true,
+});
+
+tripSchema.virtual("tripType", {
+  ref: "TripType",
+  localField: "tripTypeId",
+  foreignField: "_id",
+  justOne: true,
+});
+
+tripSchema.virtual("timing", {
+  ref: "Timing",
+  localField: "timingId",
   foreignField: "_id",
   justOne: true,
 });
