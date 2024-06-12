@@ -5,6 +5,9 @@ const Driver = require("../../models/driver");
 const Address = require("../../models/address");
 const Vehicle = require("../../models/vehicle");
 const Location = require("../../models/location");
+const Route = require("../../models/route");
+const Timing = require("../../models/timing");
+const TripType = require("../../models/tripType");
 
 // VALIDATIONS
 const { driverValidation } = require("../../validations/driver");
@@ -24,6 +27,7 @@ const moduleName = `Driver`;
 
 module.exports = {
   create: async (req, res) => {
+    console.log("REACHEDDD");
     try {
       const body = req.body;
       const { error } = driverValidation(body);
@@ -43,7 +47,10 @@ module.exports = {
 
       const role = await Role.findById(body.roleId);
       const vehicle = await Vehicle.findById(body.vehicleId);
-      const location = await Location.findById(body.locationId);
+      //const location = await Location.findById(body.locationId);
+      const route = await Route.findById(body.routeId);
+      const timing = await Timing.findById(body.timingId);
+      const tripType = await TripType.findById(body.tripTypeId);
 
       if (!role) {
         return Response.customResponse(
@@ -61,7 +68,31 @@ module.exports = {
         );
       }
 
-      if (!location) {
+      // if (!location) {
+      //   return Response.customResponse(
+      //     res,
+      //     404,
+      //     ResponseMessage.NO_LOCATION_RECORD
+      //   );
+      // }
+
+      if (!route) {
+        return Response.customResponse(
+          res,
+          404,
+          ResponseMessage.NO_LOCATION_RECORD
+        );
+      }
+
+      if (!timing) {
+        return Response.customResponse(
+          res,
+          404,
+          ResponseMessage.NO_LOCATION_RECORD
+        );
+      }
+
+      if (!tripType) {
         return Response.customResponse(
           res,
           404,
@@ -84,8 +115,16 @@ module.exports = {
       const pilot = new Driver({
         roleId: body.roleId,
         vehicleId: body.vehicleId,
-        locationId: body.locationId,
+        //locationId: body.locationId,
         code: "DR" + uniqueCode,
+        routeId: body.routeId,
+        timingId: body.timingId,
+        tripTypeId: body.tripTypeId,
+        drivingLicense: body.drivingLicense,
+        plateNumber: body.plateNumber,
+        plateNumberCode: body.plateNumberCode,
+        businessLicense: body.businessLicense,
+        isAssigned: body.isAssigned,
         name: body.name,
         email: body.email,
         password: hashedPassword,
@@ -126,8 +165,11 @@ module.exports = {
       pagination.data = await Driver.find()
         .populate([
           { path: "role", select: "name claims" },
-          { path: "vehicle", select: "vehicleModel" },
-          { path: "location", select: "subcity" },
+          { path: "vehicle" },
+          { path: "route" },
+          { path: "timing" },
+          { path: "tripType" },
+          //{ path: "location", select: "subcity" },
         ])
         .select("-password")
         .sort({ _id: -1 })
@@ -145,9 +187,9 @@ module.exports = {
       pagination.data = pagination.data.map((item) => ({
         ...item.toJSON(),
         role: item.role ? item.role.name : null,
-        permissions: item.role ? item.role.claims : null,
-        location: item.location ? item.location.subcity : null,
-        vehicle: item.vehicle ? item.vehicle.vehicleModel : null,
+        //permissions: item.role ? item.role.claims : null,
+        //location: item.location ? item.location.subcity : null,
+        //vehicle: item.vehicle ? item.vehicle.vehicleModel : null,
       }));
 
       return Response.paginationResponse(res, res.statusCode, pagination);
@@ -161,9 +203,13 @@ module.exports = {
       const pilot = await Driver.findById(req.params.id)
         .select("-password")
         .populate([
-          { path: "role", select: "name claims" },
-          { path: "vehicle", select: "vehicleModel" },
-          { path: "location", select: "subcity" },
+          //{ path: "role", select: "name claims" },
+          { path: "vehicle" },
+          { path: "route" },
+          { path: "timing" },
+          { path: "tripType" },
+          // { path: "vehicle", select: "vehicleModel" },
+          // { path: "location", select: "subcity" },
         ]);
 
       if (!pilot) {
@@ -190,9 +236,20 @@ module.exports = {
         createdAt: pilot.createdAt,
         updatedAt: pilot.updatedAt,
         role: pilot.role ? pilot.role.name : null,
-        permissions: pilot.role ? pilot.role.claims : null,
-        location: pilot.location ? pilot.location.subcity : null,
-        vehicle: pilot.vehicle ? pilot.vehicle.vehicleModel : null,
+        //permissions: pilot.role ? pilot.role.claims : null,
+        drivingLicense: pilot.drivingLicense,
+        plateNumber: pilot.plateNumber,
+        plateNumberCode: pilot.plateNumberCode,
+        businessLicense: pilot.businessLicense,
+        isAssigned: pilot.isAssigned,
+        vehicle: pilot.vehicle,
+        route: pilot.route,
+        timing: pilot.timing,
+        tripType: pilot.tripType,
+
+
+        //location: pilot.location ? pilot.location.subcity : null,
+        //vehicle: pilot.vehicle ? pilot.vehicle.vehicleModel : null,
       };
 
       return Response.successResponse(res, res.statusCode, pilotData);
@@ -219,6 +276,11 @@ module.exports = {
       pilot.email = body.email || pilot.email;
       pilot.name = body.name || pilot.name;
       pilot.updatedAt = DateUtil.currentDate();
+      pilot.isAssigned = body.isAssigned;
+      pilot.vehicleId = body.vehicleId || pilot.vehicleId ;
+      pilot.routeId = body.routeId || pilot.routeId;
+      pilot.timingId = body.timingId || pilot.timingId,
+      pilot.tripTypeId = body.tripTypeId || pilot.tripTypeId;
 
       const updatedPilot = await pilot.save();
 

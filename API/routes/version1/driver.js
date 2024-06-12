@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const { bearerToken } = require("../../authentication/auth");
+const uploadUtility = require("../../utilities/upload_utility");
 const driverController = require("../../controllers/version1/driver");
+
+let destination = `uploads/driver/`;
 
 router.post("/", driverController.create);
 router.patch("/forgot/password", driverController.resetPassword);
@@ -13,5 +16,23 @@ router.get("/:id", driverController.get);
 router.patch("/", driverController.update);
 router.delete("/:id/:actionBy", driverController.delete);
 router.patch("/change/password", driverController.changePassword);
+
+router.post(
+    "/uploadAvatar/:code",
+    uploadUtility.uploadAvatar(destination),
+    uploadUtility.uploadImage
+);
+
+router.post(
+    "/uploadDrivingLicense/:code",
+    uploadUtility.uploadAvatar(destination),
+    uploadUtility.uploadImage
+);
+
+router.post(
+    "/uploadBusinessLicense/:code",
+    uploadUtility.uploadAvatar(destination),
+    uploadUtility.uploadImage
+);
 
 module.exports = router;
