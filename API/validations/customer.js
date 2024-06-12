@@ -4,6 +4,9 @@ const ResponseMessage = require("../utilities/messages_utility");
 const customerValidation = (data) => {
   const schema = Joi.object({
     roleId: Joi.string().required(),
+    routeId: Joi.string().required(),
+    timingId: Joi.string().required(),
+    tripTypeId: Joi.string().required(),
     name: Joi.string().required(),
     email: Joi.string().min(4).required().email(),
     password: Joi.string()
