@@ -60,6 +60,9 @@ module.exports = {
 
       const customer = new Customer({
         roleId: body.roleId,
+        routeId: body.routeId,
+        timingId: body.timingId,
+        tripTypeId: body.tripTypeId,
         code: "CU" + uniqueCode,
         name: body.name,
         email: body.email,
@@ -100,7 +103,12 @@ module.exports = {
       }
 
       pagination.data = await Customer.find()
-        .populate({ path: "role", select: "name claims" })
+        .populate([
+          { path: "role", select: "name description" },
+          { path: "route", select: "name status price" },
+          { path: "time", select: "name status" },
+          { path: "tripType", select: "name status" },
+        ])
         .select("-password")
         .sort({ _id: -1 })
         .skip(skip)
@@ -116,7 +124,7 @@ module.exports = {
 
       pagination.data = pagination.data.map((item) => ({
         ...item.toJSON(),
-        role: item.role ? item.role.name : null,
+        // role: item.role ? item.role.name : null,
         permissions: item.role ? item.role.claims : null,
       }));
 
@@ -131,10 +139,10 @@ module.exports = {
       const customer = await Customer.findById(req.params.id)
         .select("-password")
         .populate([
-          {
-            path: "role",
-            select: "name claims",
-          },
+          { path: "role", select: "name description" },
+          { path: "route", select: "name status price" },
+          { path: "time", select: "name status" },
+          { path: "tripType", select: "name status" },
         ]);
 
       if (!customer) {
@@ -160,7 +168,10 @@ module.exports = {
         createdAt: customer.createdAt,
         updatedAt: customer.updatedAt,
         id: customer._id,
-        role: customer.role ? customer.role.name : null,
+        role: customer.role ? customer.role : null,
+        route: customer.route ? customer.route : null,
+        time: customer.time ? customer.time : null,
+        tripType: customer.tripType ? customer.tripType : null,
         permissions: customer.role ? customer.role.claims : null,
       };
 
@@ -187,6 +198,9 @@ module.exports = {
       customer.email = body.email || customer.email;
       customer.status = body.status || customer.status;
       customer.updatedAt = DateUtil.currentDate();
+      customer.routeId = body.routeId || customer.routeId;
+      customer.timingId = body.timingId || customer.timinId;
+      customer.tripTypeId = body.tripTypeId || customer.tripTypeId;
 
       const updatedCustomer = await customer.save();
 
