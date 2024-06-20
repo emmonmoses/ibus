@@ -2,11 +2,28 @@ const mongoose = require("mongoose");
 
 const tripSchema = new mongoose.Schema(
   {
-    pickUp: {
+    code: {
       type: String,
     },
-    dropOff: {
+    description: {
       type: String,
+    },
+    customers: [
+      {
+        id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Customer",
+        },
+        _id: false,
+      },
+    ],
+    routeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Route",
+    },
+    timingId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Timing",
     },
     vehicleId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -16,48 +33,13 @@ const tripSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "TripType",
     },
-    timingId: {
+    driverId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Timing",
-    },
-    locationId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
-    },
-    code: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
-    email: {
-      type: String,
-    },
-    password: {
-      type: String,
-    },
-    phone: {
-      code: {
-        type: String,
-      },
-      number: {
-        type: Number,
-      },
-    },
-    address: {
-      city: {
-        type: String,
-      },
-      country: {
-        type: String,
-      },
-      region: {
-        type: String,
-      },
+      ref: "Driver",
     },
     status: {
-      type: Number,
-      default: 1,
+      type: Boolean,
+      default: false,
     },
     createdAt: {
       type: Date,
@@ -65,6 +47,7 @@ const tripSchema = new mongoose.Schema(
     },
     updatedAt: {
       type: Date,
+      immutable: true,
     },
   },
   {
@@ -73,16 +56,20 @@ const tripSchema = new mongoose.Schema(
       virtuals: true,
       transform: function (doc, ret) {
         delete ret._id;
-        delete ret.roleId;
-        delete ret.password;
+        delete ret.routeId;
+        delete ret.timingId;
+        delete ret.vehicleId;
+        delete ret.tripTypeId;
       },
     },
     toJSON: {
       virtuals: true,
       transform: function (doc, ret) {
         delete ret._id;
-        delete ret.roleId;
-        delete ret.password;
+        delete ret.routeId;
+        delete ret.timingId;
+        delete ret.vehicleId;
+        delete ret.tripTypeId;
       },
     },
   }
@@ -92,9 +79,9 @@ tripSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 
-tripSchema.virtual("role", {
-  ref: "Role",
-  localField: "roleId",
+tripSchema.virtual("route", {
+  ref: "Route",
+  localField: "routeId",
   foreignField: "_id",
   justOne: true,
 });
