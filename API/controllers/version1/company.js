@@ -116,7 +116,11 @@ module.exports = {
 
             pagination.data = pagination.data.map((item) => ({
                 ...item.toJSON(),
-                role: item.role ? item.role.name : null,
+                role: {
+                    id:item.role ? item.role.id : null,
+                    name:item.role ? item.role.name : null,
+                },                
+                // role: item.role ? item.role.name : null,
                 permissions: item.role ? item.role.claims : null,
             }));
 
@@ -180,12 +184,14 @@ module.exports = {
             }
 
             company.address.city = body.address.city || company.address.city;
+            company.address.region = body.address.region || company.address.region;
             company.address.country =
                 body.address.country || company.address.country;
-            company.address.region = body.address.region || company.address.region;
             company.name = body.name || company.name;
             company.email = body.email || company.email;
             company.status = body.status || company.status;
+            company.phone.code = body.phone.code || company.phone.code;
+            company.phone.number = body.phone.number || company.phone.number;
             company.updatedAt = DateUtil.currentDate();
 
             const updatedCompany = await company.save();
