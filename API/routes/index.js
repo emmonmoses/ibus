@@ -4,6 +4,7 @@ const router = express.Router();
 const version = process.env.API_VERSION;
 
 // version1 Routes
+const tripRouter = require("./version1/trip");
 const roleRouter = require("./version1/role");
 const userRouter = require("./version1/admin");
 const routeRouter = require("./version1/route");
@@ -25,5 +26,6 @@ router.use(`/v${version}/vehicles`, vehicleRouter);
 router.use(`/v${version}/customer`, customerRouter);
 router.use(`/v${version}/tripType`, tripTypeRouter);
 router.use(`/v${version}/locations`, locationRouter);
+router.use(`/v${version}/tripsubscriptions`, tripRouter);
 
 module.exports = router;

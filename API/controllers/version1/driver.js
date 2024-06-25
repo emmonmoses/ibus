@@ -18,7 +18,7 @@ const { login } = require("../../utilities/login_utility");
 const Response = require("../../utilities/response_utility");
 const unique = require("../../utilities/codegenerator_utility");
 const ResponseMessage = require("../../utilities/messages_utility");
-const PaginationUtiliy = require("../../utilities/pagination_utility");
+const PaginationUtility = require("../../utilities/pagination_utility");
 const { resetPassword } = require("../../utilities/resetpassword_utility");
 const { changePassword } = require("../../utilities/changepassword_utility");
 const { createActivityLog } = require("../../utilities/activitylog_utility");
@@ -149,7 +149,7 @@ module.exports = {
   getAll: async (req, res) => {
     try {
       const totalDrivers = await Driver.countDocuments();
-      const { pagination, skip } = await PaginationUtiliy.paginationParams(
+      const { pagination, skip } = await PaginationUtility.paginationParams(
         req,
         totalDrivers
       );
@@ -164,12 +164,11 @@ module.exports = {
 
       pagination.data = await Driver.find()
         .populate([
-          { path: "role", select: "name claims" },
-          { path: "vehicle" },
-          { path: "route" },
-          { path: "timing" },
-          { path: "tripType" },
-          //{ path: "location", select: "subcity" },
+          { path: "role", select: "name" },
+          { path: "route", select: "name" },
+          { path: "timing", select: "name" },
+          { path: "vehicle", select: "name" },
+          { path: "tripType", select: "name" },
         ])
         .select("-password")
         .sort({ _id: -1 })
@@ -187,9 +186,86 @@ module.exports = {
       pagination.data = pagination.data.map((item) => ({
         ...item.toJSON(),
         role: item.role ? item.role.name : null,
-        //permissions: item.role ? item.role.claims : null,
-        //location: item.location ? item.location.subcity : null,
-        //vehicle: item.vehicle ? item.vehicle.vehicleModel : null,
+        route: item.route ? item.route.name : null,
+        timing: item.timing ? item.timing.name : null,
+        vehicle: item.vehicle ? item.vehicle.name : null,
+        tripType: item.tripType ? item.tripType.name : null,
+      }));
+
+      return Response.paginationResponse(res, res.statusCode, pagination);
+    } catch (err) {
+      return Response.errorResponse(res, 500, err);
+    }
+  },
+
+  filterDrivers: async (req, res) => {
+    try {
+      const param = req.params;
+
+      const drivers = await Driver.find({
+        routeId: param.routeId,
+        timingId: param.timingId,
+        vehicleId: param.vehicleId,
+        tripTypeId: param.tripTypeId,
+      });
+
+      if (!drivers) {
+        return Response.customResponse(res, 404, ResponseMessage.NO_RECORD);
+      }
+
+      const totalDrivers = await Driver.countDocuments({
+        routeId: param.routeId,
+        timingId: param.timingId,
+        vehicleId: param.vehicleId,
+        tripTypeId: param.tripTypeId,
+      });
+
+      const { pagination, skip } = await PaginationUtility.paginationParams(
+        req,
+        totalDrivers
+      );
+
+      if (pagination.page > pagination.pages) {
+        return Response.customResponse(
+          res,
+          res.statusCode,
+          ResponseMessage.OUTOF_DATA
+        );
+      }
+
+      pagination.data = await Driver.find({
+        routeId: param.routeId,
+        timingId: param.timingId,
+        vehicleId: param.vehicleId,
+        tripTypeId: param.tripTypeId,
+      })
+        .populate([
+          { path: "role", select: "name" },
+          { path: "route", select: "name" },
+          { path: "timing", select: "name" },
+          { path: "vehicle", select: "name" },
+          { path: "tripType", select: "name" },
+        ])
+        .select("-password")
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(pagination.pageSize);
+
+      if (totalDrivers === 0) {
+        return Response.customResponse(
+          res,
+          res.statusCode,
+          ResponseMessage.NO_DATA
+        );
+      }
+
+      pagination.data = pagination.data.map((item) => ({
+        ...item.toJSON(),
+        role: item.role ? item.role.name : null,
+        route: item.route ? item.route.name : null,
+        timing: item.timing ? item.timing.name : null,
+        vehicle: item.vehicle ? item.vehicle.name : null,
+        tripType: item.tripType ? item.tripType.name : null,
       }));
 
       return Response.paginationResponse(res, res.statusCode, pagination);
@@ -203,13 +279,11 @@ module.exports = {
       const pilot = await Driver.findById(req.params.id)
         .select("-password")
         .populate([
-          //{ path: "role", select: "name claims" },
-          { path: "vehicle" },
-          { path: "route" },
-          { path: "timing" },
-          { path: "tripType" },
-          // { path: "vehicle", select: "vehicleModel" },
-          // { path: "location", select: "subcity" },
+          { path: "role", select: "name" },
+          { path: "route", select: "name" },
+          { path: "timing", select: "name" },
+          { path: "vehicle", select: "name" },
+          { path: "tripType", select: "name" },
         ]);
 
       if (!pilot) {
@@ -236,7 +310,6 @@ module.exports = {
         createdAt: pilot.createdAt,
         updatedAt: pilot.updatedAt,
         role: pilot.role ? pilot.role.name : null,
-        //permissions: pilot.role ? pilot.role.claims : null,
         drivingLicense: pilot.drivingLicense,
         plateNumber: pilot.plateNumber,
         plateNumberCode: pilot.plateNumberCode,
@@ -246,10 +319,6 @@ module.exports = {
         route: pilot.route,
         timing: pilot.timing,
         tripType: pilot.tripType,
-
-
-        //location: pilot.location ? pilot.location.subcity : null,
-        //vehicle: pilot.vehicle ? pilot.vehicle.vehicleModel : null,
       };
 
       return Response.successResponse(res, res.statusCode, pilotData);
@@ -277,10 +346,10 @@ module.exports = {
       pilot.name = body.name || pilot.name;
       pilot.updatedAt = DateUtil.currentDate();
       pilot.isAssigned = body.isAssigned;
-      pilot.vehicleId = body.vehicleId || pilot.vehicleId ;
+      pilot.vehicleId = body.vehicleId || pilot.vehicleId;
       pilot.routeId = body.routeId || pilot.routeId;
-      pilot.timingId = body.timingId || pilot.timingId,
-      pilot.tripTypeId = body.tripTypeId || pilot.tripTypeId;
+      (pilot.timingId = body.timingId || pilot.timingId),
+        (pilot.tripTypeId = body.tripTypeId || pilot.tripTypeId);
 
       const updatedPilot = await pilot.save();
 
