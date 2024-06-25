@@ -14,7 +14,7 @@ const { login } = require("../../utilities/login_utility");
 const Response = require("../../utilities/response_utility");
 const unique = require("../../utilities/codegenerator_utility");
 const ResponseMessage = require("../../utilities/messages_utility");
-const PaginationUtiliy = require("../../utilities/pagination_utility");
+const PaginationUtility = require("../../utilities/pagination_utility");
 const { resetPassword } = require("../../utilities/resetpassword_utility");
 const { changePassword } = require("../../utilities/changepassword_utility");
 const { createActivityLog } = require("../../utilities/activitylog_utility");
@@ -89,7 +89,7 @@ module.exports = {
   getAll: async (req, res) => {
     try {
       const totalCustomers = await Customer.countDocuments();
-      const { pagination, skip } = await PaginationUtiliy.paginationParams(
+      const { pagination, skip } = await PaginationUtility.paginationParams(
         req,
         totalCustomers
       );
