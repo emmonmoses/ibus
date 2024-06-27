@@ -68,14 +68,6 @@ module.exports = {
         );
       }
 
-      // if (!location) {
-      //   return Response.customResponse(
-      //     res,
-      //     404,
-      //     ResponseMessage.NO_LOCATION_RECORD
-      //   );
-      // }
-
       if (!route) {
         return Response.customResponse(
           res,
@@ -115,11 +107,13 @@ module.exports = {
       const pilot = new Driver({
         roleId: body.roleId,
         vehicleId: body.vehicleId,
-        //locationId: body.locationId,
         code: "DR" + uniqueCode,
         routeId: body.routeId,
         timingId: body.timingId,
         tripTypeId: body.tripTypeId,
+        vehicleBack: body.vehicleBack,
+        vehicleFront: body.vehicleFront,
+        vehicleLogBook: body.vehicleLogBook,
         drivingLicense: body.drivingLicense,
         plateNumber: body.plateNumber,
         plateNumberCode: body.plateNumberCode,
@@ -198,9 +192,9 @@ module.exports = {
     }
   },
 
-  filterDrivers: async (req, res) => {
+  search: async (req, res) => {
     try {
-      const param = req.params;
+      const param = req.body;
 
       const drivers = await Driver.find({
         routeId: param.routeId,
@@ -344,6 +338,8 @@ module.exports = {
       pilot.status = body.status || pilot.status;
       pilot.email = body.email || pilot.email;
       pilot.name = body.name || pilot.name;
+      pilot.vehicleBack = body.vehicleBack || pilot.vehicleBack,
+      pilot.vehicleFront = body.vehicleFront || pilot.vehicleFront,
       pilot.updatedAt = DateUtil.currentDate();
       pilot.isAssigned = body.isAssigned;
       pilot.vehicleId = body.vehicleId || pilot.vehicleId;
