@@ -10,10 +10,6 @@ const driverSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Vehicle",
     },
-    // locationId: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Location",
-    // },
     routeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Route",
@@ -27,6 +23,15 @@ const driverSchema = new mongoose.Schema(
       ref: "TripType",
     },
     avatar: {
+      type: String,
+    },
+    vehicleFront: {
+      type: String,
+    },
+    vehicleBack: {
+      type: String,
+    },
+    vehicleLogBook: {
       type: String,
     },
     drivingLicense: {
