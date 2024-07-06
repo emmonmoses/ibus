@@ -19,20 +19,38 @@ router.delete("/:id/:actionBy", driverController.delete);
 router.patch("/change/password", driverController.changePassword);
 
 router.post(
-    "/uploadAvatar/:code",
-    uploadUtility.uploadAvatar(destination),
+    "/uploadDriverAvatar",
+    uploadUtility.uploadDriverAvatar(destination),
     uploadUtility.uploadImage
 );
 
 router.post(
-    "/uploadDrivingLicense/:code",
-    uploadUtility.uploadAvatar(destination),
+    "/uploadDrivingLicense",
+    uploadUtility.uploadDriverDocuments(destination),
     uploadUtility.uploadImage
 );
 
 router.post(
-    "/uploadBusinessLicense/:code",
-    uploadUtility.uploadAvatar(destination),
+    "/uploadBusinessLicense",
+    uploadUtility.uploadDriverDocuments(destination),
+    uploadUtility.uploadImage
+);
+
+router.post(
+    "/uploadVehicleFront",
+    uploadUtility.uploadDriverDocuments(destination),
+    uploadUtility.uploadImage
+);
+
+router.post(
+    "/uploadVehicleBack",
+    uploadUtility.uploadDriverDocuments(destination),
+    uploadUtility.uploadImage
+);
+
+router.post(
+    "/uploadVehicleLogBook",
+    uploadUtility.uploadDriverDocuments(destination),
     uploadUtility.uploadImage
 );
 

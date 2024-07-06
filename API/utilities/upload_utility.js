@@ -54,6 +54,20 @@ const uploadAvatar = (folderpath) => {
   };
 };
 
+const uploadDriverAvatar = (folderpath) => {
+  return async (req, res, next) => {
+    req.destination = `${folderpath}`;
+    upload(req.destination).single("avatar")(req, res, next);
+  };
+};
+
+const uploadDriverDocuments = (folderpath) => {
+  return async (req, res, next) => {
+    req.destination = `${folderpath}`;
+    upload(req.destination).single("avatar")(req, res, next);
+  };
+};
+
 const uploadImage = async (req, res) => {
   try {
     if (!req.file) {
@@ -133,4 +147,4 @@ const getImage = (folderpath) => {
   };
 };
 
-module.exports = { uploadAvatar, uploadImage, getImage };
+module.exports = { uploadAvatar, uploadDriverAvatar, uploadDriverDocuments, uploadImage, getImage };
