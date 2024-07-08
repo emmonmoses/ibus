@@ -8,7 +8,7 @@ const { roleValidation } = require("../../validations/role");
 const Response = require("../../utilities/response_utility");
 const date_utility = require("../../utilities/date_utility");
 const ResponseMessage = require("../../utilities/messages_utility");
-const PaginationUtiliy = require("../../utilities/pagination_utility");
+const PaginationUtility = require("../../utilities/pagination_utility");
 const { createActivityLog } = require("../../utilities/activitylog_utility");
 
 const moduleName = "Role";
@@ -46,7 +46,7 @@ module.exports = {
   getroles: async (req, res) => {
     try {
       const totalrole = await Role.countDocuments();
-      const { pagination, skip } = await PaginationUtiliy.paginationParams(
+      const { pagination, skip } = await PaginationUtility.paginationParams(
         req,
         totalrole,
       );

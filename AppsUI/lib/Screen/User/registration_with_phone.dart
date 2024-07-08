@@ -242,7 +242,7 @@ class _RegisterWithPhoneNumberState extends State<RegisterWithPhoneNumber> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   child: _isLoading
-                      ? Container(
+                      ? SizedBox(
                           width: 20,
                           height: 20,
                           child: CircularProgressIndicator(

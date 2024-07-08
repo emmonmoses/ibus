@@ -10,9 +10,44 @@ const driverSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Vehicle",
     },
-    locationId: {
+    routeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      ref: "Route",
+    },
+    timingId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Timing",
+    },
+    tripTypeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TripType",
+    },
+    avatar: {
+      type: String,
+    },
+    vehicleFront: {
+      type: String,
+    },
+    vehicleBack: {
+      type: String,
+    },
+    vehicleLogBook: {
+      type: String,
+    },
+    drivingLicense: {
+      type: String,
+    },
+    plateNumber: {
+      type: String,
+    },
+    plateNumberCode: {
+      type: String,
+    },
+    businessLicense: {
+      type: String,
+    },
+    isAssigned: {
+      type: Boolean,
     },
     code: {
       type: String,
@@ -65,6 +100,10 @@ const driverSchema = new mongoose.Schema(
         delete ret._id;
         delete ret.roleId;
         delete ret.password;
+        delete ret.routeId;
+        delete ret.timingId;
+        delete ret.tripTypeId;
+        delete ret.vehicleId;
       },
     },
     toJSON: {
@@ -73,6 +112,10 @@ const driverSchema = new mongoose.Schema(
         delete ret._id;
         delete ret.roleId;
         delete ret.password;
+        delete ret.routeId;
+        delete ret.timingId;
+        delete ret.tripTypeId;
+        delete ret.vehicleId;
       },
     },
   }
@@ -96,9 +139,30 @@ driverSchema.virtual("vehicle", {
   justOne: true,
 });
 
-driverSchema.virtual("location", {
-  ref: "Location",
-  localField: "locationId",
+// driverSchema.virtual("location", {
+//   ref: "Location",
+//   localField: "locationId",
+//   foreignField: "_id",
+//   justOne: true,
+// });
+
+driverSchema.virtual("route", {
+  ref: "Route",
+  localField: "routeId",
+  foreignField: "_id",
+  justOne: true,
+});
+
+driverSchema.virtual("timing", {
+  ref: "Timing",
+  localField: "timingId",
+  foreignField: "_id",
+  justOne: true,
+});
+
+driverSchema.virtual("tripType", {
+  ref: "TripType",
+  localField: "tripTypeId",
   foreignField: "_id",
   justOne: true,
 });

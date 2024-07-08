@@ -11,6 +11,9 @@ const vehicleSchema = new mongoose.Schema(
     vehicleCapacity: {
       type: Number,
     },
+    vehicleRegistration: {
+      type: String,
+    },
     status: {
       type: Boolean,
       default: false,

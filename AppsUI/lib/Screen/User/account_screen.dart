@@ -7,6 +7,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:Weyeyet/utilities/app_theme.dart';
 
 class AccountScreen extends StatelessWidget {
+  const AccountScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
