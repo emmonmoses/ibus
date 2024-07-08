@@ -1,4 +1,3 @@
-import 'package:Weyeyet/model/car_type.dart';
 import 'package:flutter/material.dart';
 import 'package:Weyeyet/Screen/items_details.dart';
 import 'package:Weyeyet/model/items_model.dart';
@@ -12,78 +11,80 @@ class ItemsDisplay extends StatefulWidget {
 }
 
 class _ItemsDisplayState extends State<ItemsDisplay> {
-void _showCarTypesModal(BuildContext context, TripDetail trip) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true, // Allows the modal to be scroll controlled
-    builder: (BuildContext context) {
-      return FractionallySizedBox(
-        heightFactor: 0.5, // Adjust this value to set the height of the modal
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Available Car Types',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+  void _showCarTypesModal(BuildContext context, TripDetail trip) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Allows the modal to be scroll controlled
+      builder: (BuildContext context) {
+        return FractionallySizedBox(
+          heightFactor: 0.5, // Adjust this value to set the height of the modal
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Available Car Types',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: ListView(
-                  children: trip.carTypes.map((carType) {
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.pop(context); // Close the modal
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailPage(
-                                trip: trip,
-                                selectedIndex: trip.carTypes.indexOf(carType), carType: carType,
-                              ),
-                            ),
-                          );
-                        },
-                        title: Row(
-                          children: [
-                            Image.asset(carType.image, height: 40, width: 40),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Text(
-                                carType.name,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                const SizedBox(height: 16),
+                Expanded(
+                  child: ListView(
+                    children: trip.carTypes.map((carType) {
+                      return Card(
+                        elevation: 5,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.pop(context); // Close the modal
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPage(
+                                  trip: trip,
+                                  selectedIndex: trip.carTypes.indexOf(carType),
+                                  carType: carType,
                                 ),
                               ),
-                            ),
-                            Text(
-                              '\$${carType.price}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                            );
+                          },
+                          title: Row(
+                            children: [
+                              Image.asset(carType.image, height: 60, width: 60),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Text(
+                                  carType.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
+                              Text(
+                                'ETB ${carType.price}',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
+                      );
+                    }).toList(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    },
-  );
-}
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +116,22 @@ void _showCarTypesModal(BuildContext context, TripDetail trip) {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 10),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          trip.name,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 15),
                     Center(
                       child: ClipRRect(
@@ -128,28 +145,15 @@ void _showCarTypesModal(BuildContext context, TripDetail trip) {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(
-                        trip.name,
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
                     const SizedBox(height: 4),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Row(
                         children: [
-                          const Icon(Icons.commute, size: 18),
+                          const Icon(Icons.time_to_leave, size: 18),
                           const SizedBox(width: 4),
                           Text(
-                            trip.name,
+                            trip.startTime,
                             style: const TextStyle(color: Colors.black38),
                           ),
                           const Spacer(),

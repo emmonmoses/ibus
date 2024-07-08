@@ -6,6 +6,8 @@ class AppColor {
   static Color bgSideMenu = const Color(0xFF131e29);
   static Color blue = Colors.blue;
   static Color white = Colors.white;
+  static Color black = Colors.black;
+
   static Color grey = Colors.grey.shade600;
   static Color kPrimaryColor = const Color(0xFF00BF6D);
   static Color kSecondaryColor = const Color(0xFFFE9901);
