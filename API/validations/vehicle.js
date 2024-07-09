@@ -5,7 +5,7 @@ const vehicleValidation = (data) => {
     vehicleType: Joi.string().required(),
     vehicleModel: Joi.string().required(),
     vehicleCapacity: Joi.number().required(),
-    vehicleRegistration:Joi.string().required(),
+    vehicleRegistration:Joi.string().allow(""),
     status: Joi.bool(),
     actionBy: Joi.string().allow(""),
   });

@@ -14,7 +14,7 @@ router.use(bearerToken);
 router.get("/", driverController.getAll);
 router.get("/:id", driverController.get);
 router.patch("/", driverController.update);
-router.get("/search", driverController.search);
+router.post("/search", driverController.search);
 router.delete("/:id/:actionBy", driverController.delete);
 router.patch("/change/password", driverController.changePassword);
 

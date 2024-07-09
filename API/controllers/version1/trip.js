@@ -43,25 +43,25 @@ module.exports = {
 
       // Check if all trip IDs exist
       const customerIds = body.customers.map((trip) => trip.id);
-      const customersExistenceCheck = await Promise.all(
-        customerIds.map((id) => Customer.findById(id))
-      );
+      // const customersExistenceCheck = await Promise.all(
+      //   customerIds.map((id) => Customer.findById(id))
+      // );
 
-      for (const trip of customersExistenceCheck) {
-        if (!trip) {
-          return Response.customResponse(
-            res,
-            404,
-            ResponseMessage.NO_CUSTOMER_RECORD
-          );
-        }
-      }
+      // for (const trip of customersExistenceCheck) {
+      //   if (!trip) {
+      //     return Response.customResponse(
+      //       res,
+      //       404,
+      //       ResponseMessage.NO_CUSTOMER_RECORD
+      //     );
+      //   }
+      // }
 
-      const assignedDriver = "";
-      const route = await Route.findById(body.routeId);
-      const timing = await Timing.findById(body.timingId);
-      const vehicle = await Vehicle.findById(body.vehicleId);
-      const tripType = await TripType.findById(body.tripTypeId);
+      var assignedDriver = "";
+      var route = await Route.findById(body.routeId);
+      var timing = await Timing.findById(body.timingId);
+      var vehicle = await Vehicle.findById(body.vehicleId);
+      var tripType = await TripType.findById(body.tripTypeId);
 
       const driver = await Driver.find({
         routeId: body.routeId,
@@ -145,50 +145,45 @@ module.exports = {
   getTrips: async (req, res) => {
     try {
       const totalTrips = await Trip.countDocuments();
-      const { pagination, skip } = await PaginationUtility.paginationParams(
-        req,
-        totalTrips
-      );
+      const { pagination, skip } = await PaginationUtility.paginationParams(req, totalTrips);
 
       if (pagination.page > pagination.pages) {
-        return Response.customResponse(
-          res,
-          res.statusCode,
-          ResponseMessage.OUTOF_DATA
-        );
+        return Response.customResponse(res, res.statusCode, ResponseMessage.OUTOF_DATA);
       }
 
       pagination.data = await Trip.find()
-        .select("-customers.password,-driver.password")
+        .select("-customers.password -driver.password")
         .populate([
-          { path: "trip" },
-          { path: "route" },
-          { path: "timing" },
-          { path: "driver" },
-          { path: "vehicle" },
-          { path: "tripType" },
+          { path: "route", select: "id name price" },
+          { path: "timing", select: "id name" },
+          { path: "driver", select: "id name code phone address" },
+          { path: "vehicle", select: "id vehicleType vehicleModel vehicleCapacity" },
+          { path: "tripType", select: "id name" },
+          { path: "customerDetails", select: "id name code phone address" },
         ])
         .sort({ _id: -1 })
         .skip(skip)
         .limit(pagination.pageSize);
 
       if (totalTrips === 0) {
-        return Response.customResponse(
-          res,
-          res.statusCode,
-          ResponseMessage.NO_DATA
-        );
+        return Response.customResponse(res, res.statusCode, ResponseMessage.NO_DATA);
       }
 
-      pagination.data = pagination.data.map((item) => ({
-        ...item.toJSON(),
-        trip: item.trip ? item.trip.name : null,
-        route: item.route ? item.route.name : null,
-        timing: item.timing ? item.timing.name : null,
-        driver: item.driver ? item.driver.name : null,
-        vehicle: item.vehicle ? item.vehicle.name : null,
-        tripType: item.tripType ? tritemip.tripType.name : null,
-      }));
+      pagination.data = pagination.data.map((item) => {
+        const jsonData = item.toJSON();
+        jsonData.customers = item.customerDetails ? item.customerDetails.map(cust => 
+          ({ id: cust._id, name: cust.name, code: cust.code, phone: cust.phone, address: cust.address })) : [];
+        delete jsonData.customerDetails;
+
+        return {
+          ...jsonData,
+          route: item.route ? item.route : null,
+          timing: item.timing ? item.timing : null,
+          driver: item.driver ? item.driver : null,
+          vehicle: item.vehicle ? item.vehicle : null,
+          tripType: item.tripType ? item.tripType : null,
+        };
+      });
 
       return Response.paginationResponse(res, res.statusCode, pagination);
     } catch (err) {
@@ -224,7 +219,6 @@ module.exports = {
       pagination.data = await Trip.find({ driverId: driverId })
         .select("-customers.password,-driver.password")
         .populate([
-          { path: "trip" },
           { path: "route" },
           { path: "timing" },
           { path: "driver" },
@@ -245,12 +239,11 @@ module.exports = {
 
       pagination.data = pagination.data.map((item) => ({
         ...item.toJSON(),
-        trip: item.trip ? item.trip.name : null,
         route: item.route ? item.route.name : null,
         timing: item.timing ? item.timing.name : null,
         driver: item.driver ? item.driver.name : null,
         vehicle: item.vehicle ? item.vehicle.name : null,
-        tripType: item.tripType ? tritemip.tripType.name : null,
+        tripType: item.tripType ? item.tripType.name : null,
       }));
 
       return Response.paginationResponse(res, res.statusCode, pagination);
@@ -285,7 +278,6 @@ module.exports = {
       pagination.data = await Trip.find({ driverId: driverId })
         .select("-customers.password, -driver.password")
         .populate([
-          { path: "trip" },
           { path: "route" },
           { path: "timing" },
           { path: "driver" },
@@ -306,12 +298,11 @@ module.exports = {
 
       pagination.data = pagination.data.map((item) => ({
         ...item.toJSON(),
-        trip: item.trip ? item.trip.name : null,
         route: item.route ? item.route.name : null,
         timing: item.timing ? item.timing.name : null,
         driver: item.driver ? item.driver.name : null,
         vehicle: item.vehicle ? item.vehicle.name : null,
-        tripType: item.tripType ? tritemip.tripType.name : null,
+        tripType: item.tripType ? item.tripType.name : null,
       }));
 
       return Response.paginationResponse(res, res.statusCode, pagination);
@@ -350,7 +341,6 @@ module.exports = {
       const trip = await Trip.findById(req.params.id)
         .select("-customers.password, -driver.password")
         .populate([
-          { path: "trip" },
           { path: "route" },
           { path: "timing" },
           { path: "driver" },
@@ -368,7 +358,6 @@ module.exports = {
         status: trip.status,
         createdAt: trip.createdAt,
         description: trip.description,
-        trip: trip.trip ? trip.trip.name : null,
         route: trip.route ? trip.route.name : null,
         timing: trip.timing ? trip.timing.name : null,
         driver: trip.driver ? trip.driver.name : null,

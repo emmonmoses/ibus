@@ -56,7 +56,9 @@ const tripSchema = new mongoose.Schema(
       virtuals: true,
       transform: function (doc, ret) {
         delete ret._id;
+        delete ret.customers.id;
         delete ret.routeId;
+        delete ret.driverId;
         delete ret.timingId;
         delete ret.vehicleId;
         delete ret.tripTypeId;
@@ -66,7 +68,9 @@ const tripSchema = new mongoose.Schema(
       virtuals: true,
       transform: function (doc, ret) {
         delete ret._id;
+        delete ret.customers.id;
         delete ret.routeId;
+        delete ret.driverId;
         delete ret.timingId;
         delete ret.vehicleId;
         delete ret.tripTypeId;
@@ -77,6 +81,13 @@ const tripSchema = new mongoose.Schema(
 
 tripSchema.virtual("id").get(function () {
   return this._id.toHexString();
+});
+
+tripSchema.virtual("customerDetails", {
+  ref: "Customer",
+  localField: "customers.id",
+  foreignField: "_id",
+  justOne: false,
 });
 
 tripSchema.virtual("route", {
@@ -96,6 +107,13 @@ tripSchema.virtual("vehicle", {
 tripSchema.virtual("tripType", {
   ref: "TripType",
   localField: "tripTypeId",
+  foreignField: "_id",
+  justOne: true,
+});
+
+tripSchema.virtual("driver", {
+  ref: "Driver",
+  localField: "driverId",
   foreignField: "_id",
   justOne: true,
 });
