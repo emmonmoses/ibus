@@ -64,7 +64,7 @@ List<TripDetail> tripsItems = [
   TripDetail(
     id: '1',
     image: 'assets/images/car.png',
-    name: 'Bole - 4 Kilo',
+    name: 'Bole - Saris',
     price: 12,
     pickup: 'Bole',
     dropoff: '4 kilo',
@@ -82,14 +82,17 @@ List<TripDetail> tripsItems = [
     ),
     paymentStatus: 'Paid',
     carTypes: [
-      CarType(name: 'Van', image: 'assets/images/sedan.png', price: 12),
-      CarType(name: 'SUV', image: 'assets/images/car.png', price: 15),
+      CarType(name: 'Sedan', image: 'assets/images/sedan.png', price: 12),
+      CarType(name: 'Midsize', image: 'assets/images/midsize.png', price: 12),
+      CarType(name: 'Minivan', image: 'assets/images/minivan.jpg', price: 15),
+      CarType(name: 'Minibus', image: 'assets/images/car.png', price: 10),
+      CarType(name: 'Lada', image: 'assets/images/lada.PNG', price: 10),
     ],
   ),
-   TripDetail(
+  TripDetail(
     id: '2',
     image: 'assets/images/car.png',
-    name: 'Bole - 4 Kilo',
+    name: 'Saris - Megenagna ',
     price: 12,
     pickup: 'Bole',
     dropoff: '4 kilo',
@@ -107,15 +110,18 @@ List<TripDetail> tripsItems = [
     ),
     paymentStatus: 'Paid',
     carTypes: [
-      CarType(name: 'Van', image: 'assets/images/sedan.png', price: 12),
-      CarType(name: 'SUV', image: 'assets/images/car.png', price: 15),
+      CarType(name: 'Sedan', image: 'assets/images/sedan.png', price: 12),
+      CarType(name: 'Midsize', image: 'assets/images/midsize.png', price: 12),
+      CarType(name: 'Minivan', image: 'assets/images/minivan.jpg', price: 15),
+      CarType(name: 'Minibus', image: 'assets/images/car.png', price: 10),
+      CarType(name: 'Lada', image: 'assets/images/lada.PNG', price: 10),
     ],
   ),
- 
-   TripDetail(
+
+  TripDetail(
     id: '3',
     image: 'assets/images/car.png',
-    name: 'Bole - 4 Kilo',
+    name: 'Bole - Hayat',
     price: 12,
     pickup: 'Bole',
     dropoff: '4 kilo',
@@ -133,15 +139,18 @@ List<TripDetail> tripsItems = [
     ),
     paymentStatus: 'Paid',
     carTypes: [
-      CarType(name: 'Van', image: 'assets/images/sedan.png', price: 12),
-      CarType(name: 'SUV', image: 'assets/images/car.png', price: 15),
+       CarType(name: 'Sedan', image: 'assets/images/sedan.png', price: 12),
+      CarType(name: 'Midsize', image: 'assets/images/midsize.png', price: 12),
+      CarType(name: 'Minivan', image: 'assets/images/minivan.jpg', price: 15),
+      CarType(name: 'Minibus', image: 'assets/images/car.png', price: 10),
+      CarType(name: 'Lada', image: 'assets/images/lada.PNG', price: 10),
     ],
   ),
- 
-   TripDetail(
+
+  TripDetail(
     id: '4',
     image: 'assets/images/car.png',
-    name: 'Bole - 4 Kilo',
+    name: 'Kazanchis - Goro',
     price: 12,
     pickup: 'Bole',
     dropoff: '4 kilo',
@@ -159,14 +168,17 @@ List<TripDetail> tripsItems = [
     ),
     paymentStatus: 'Paid',
     carTypes: [
-      CarType(name: 'Van', image: 'assets/images/sedan.png', price: 12),
-      CarType(name: 'SUV', image: 'assets/images/car.png', price: 15),
+        CarType(name: 'Sedan', image: 'assets/images/sedan.png', price: 12),
+      CarType(name: 'Midsize', image: 'assets/images/midsize.png', price: 12),
+      CarType(name: 'Minivan', image: 'assets/images/minivan.jpg', price: 15),
+      CarType(name: 'Minibus', image: 'assets/images/car.png', price: 10),
+      CarType(name: 'Lada', image: 'assets/images/lada.PNG', price: 10),
     ],
   ),
-   TripDetail(
+  TripDetail(
     id: '5',
     image: 'assets/images/car.png',
-    name: 'Bole - 4 Kilo',
+    name: 'Bole - Asko',
     price: 12,
     pickup: 'Bole',
     dropoff: '4 kilo',
@@ -184,14 +196,17 @@ List<TripDetail> tripsItems = [
     ),
     paymentStatus: 'Paid',
     carTypes: [
-      CarType(name: 'Van', image: 'assets/images/sedan.png', price: 12),
-      CarType(name: 'SUV', image: 'assets/images/car.png', price: 15),
+      CarType(name: 'Sedan', image: 'assets/images/sedan.png', price: 12),
+      CarType(name: 'Midsize', image: 'assets/images/midsize.png', price: 12),
+      CarType(name: 'Minivan', image: 'assets/images/minivan.jpg', price: 15),
+      CarType(name: 'Minibus', image: 'assets/images/car.png', price: 10),
+      CarType(name: 'Lada', image: 'assets/images/lada.PNG', price: 10),
     ],
   ),
-   TripDetail(
+  TripDetail(
     id: '6',
     image: 'assets/images/car.png',
-    name: 'Bole - 4 Kilo',
+    name: 'Tafo - Mexico',
     price: 12,
     pickup: 'Bole',
     dropoff: '4 kilo',
@@ -209,10 +224,13 @@ List<TripDetail> tripsItems = [
     ),
     paymentStatus: 'Paid',
     carTypes: [
-      CarType(name: 'Van', image: 'assets/images/sedan.png', price: 12),
-      CarType(name: 'SUV', image: 'assets/images/car.png', price: 15),
+      CarType(name: 'Sedan', image: 'assets/images/sedan.png', price: 12),
+      CarType(name: 'Midsize', image: 'assets/images/midsize.png', price: 12),
+      CarType(name: 'Minivan', image: 'assets/images/minivan.jpg', price: 15),
+      CarType(name: 'Minibus', image: 'assets/images/car.png', price: 10),
+      CarType(name: 'Lada', image: 'assets/images/lada.PNG', price: 10),
     ],
   ),
- 
+
   // Add more TripDetail instances...
 ];

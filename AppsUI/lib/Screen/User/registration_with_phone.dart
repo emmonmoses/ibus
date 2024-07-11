@@ -1,5 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, unused_element
-
+import 'package:Weyeyet/Screen/User/login_page.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -271,7 +270,11 @@ class _RegisterWithPhoneNumberState extends State<RegisterWithPhoneNumber> {
                     const SizedBox(width: 5),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pushReplacementNamed('/login');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
                       },
                       child: Text(
                         'Login',

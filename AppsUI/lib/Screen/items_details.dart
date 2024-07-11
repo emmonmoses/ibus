@@ -1,22 +1,24 @@
-// ignore_for_file: unused_import
-
+import 'package:Weyeyet/Screen/trips/PaymentMethodPage.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:Weyeyet/utilities/colors.dart';
-import 'package:Weyeyet/utilities/app_theme.dart';
-import 'package:Weyeyet/utilities/item_details/confirmation_messages.dart';
+
 import 'package:Weyeyet/utilities/item_details/detail_image.dart';
 import 'package:Weyeyet/utilities/item_details/detail_items_header.dart';
 import 'package:Weyeyet/model/items_model.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key, required this.trip, required this.carType,this.selectedIndex = 0});
+  const DetailPage(
+      {super.key,
+      required this.trip,
+      required this.carType,
+      this.selectedIndex = 0});
   final TripDetail trip;
   final CarType carType;
-    final int selectedIndex; // Index of the specific image to display, default to 0
-
+  final int
+      selectedIndex; // Index of the specific image to display, default to 0
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -79,9 +81,12 @@ class _DetailPageState extends State<DetailPage> {
           // Detail header
           const DetailItemsHeader(),
           // For image with Hero animation
-     Hero(
+          Hero(
             tag: widget.trip.id, // Use an identifier here
-            child: DetailImage(carTypes: widget.trip.carTypes, selectedIndex: widget.selectedIndex), // Pass carTypes from the model
+            child: DetailImage(
+                carTypes: widget.trip.carTypes,
+                selectedIndex:
+                    widget.selectedIndex), // Pass carTypes from the model
           ),
           Container(
             color: Colors.white,
@@ -276,7 +281,8 @@ class _DetailPageState extends State<DetailPage> {
                 const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
-                    showCarDetails(context, widget.carType.name); // Use carType name
+                    showCarDetails(
+                        context, widget.carType.name); // Use carType name
                   },
                   child: FadeInDown(
                     delay: const Duration(milliseconds: 900),
@@ -334,23 +340,32 @@ class _DetailPageState extends State<DetailPage> {
                     borderRadius: BorderRadius.circular(15),
                     child: InkWell(
                       onTap: () {
-                        QuickAlert.show(
-                          headerBackgroundColor: primaryColors,
-                          context: context,
-                          type: QuickAlertType.success,
-                          title: "Congratulations!",
-                          text: "You have successfully booked a trip with the ${widget.carType.name}!",
+                        // QuickAlert.show(
+                        //   headerBackgroundColor: primaryColors,
+                        //   context: context,
+                        //   type: QuickAlertType.success,
+                        //   title: "Congratulations!",
+                        //   text: "You have successfully booked a trip with the ${widget.carType.name}!",
+                        // );
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const PaymentMethodPage();
+                            },
+                          ),
                         );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Center(
                           child: Text(
-                            'Book Now for \$${widget.carType.price}', // Use carType price
+                            'Book Now for ETB ${widget.carType.price}', // Use carType price
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 18,
                             ),
                           ),
                         ),
