@@ -18,7 +18,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final bool showIntro;
 
-  const MyApp({Key? key, required this.showIntro}) : super(key: key);
+  MyApp({Key? key, required this.showIntro}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
