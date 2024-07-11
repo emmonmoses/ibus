@@ -48,7 +48,8 @@ class _UserRegistrationState extends State<UserRegistration> {
           country: countryController.text.trim(),
         ),
         roleId: selectedRoute ?? '', // Use selectedRoute or a default value
-        tripTypeId: selectedTripType ?? '', // Use selectedTripType or a default value
+        tripTypeId:
+            selectedTripType ?? '', // Use selectedTripType or a default value
       );
 
       bool success = await userService.registerUser(user);
@@ -93,41 +94,48 @@ class _UserRegistrationState extends State<UserRegistration> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    buildTextField(nameController, 'Name', 'Please enter your name'),
+                    buildTextField(
+                        nameController, 'Name', 'Please enter your name'),
                     const SizedBox(height: 20),
-                    buildTextField(emailController, 'Email', 'Please enter a valid email',
+                    buildTextField(
+                        emailController, 'Email', 'Please enter a valid email',
                         validator: (value) {
-                          if (value != null && !value.isEmpty) {
-                            return RegExp(
-                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                      if (value != null && !value.isEmpty) {
+                        return RegExp(
+                                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
                                 .hasMatch(value)
-                                ? null
-                                : 'Please enter a valid email';
-                          } else {
-                            return 'Please enter your email';
-                          }
-                        }),
+                            ? null
+                            : 'Please enter a valid email';
+                      } else {
+                        return 'Please enter your email';
+                      }
+                    }),
                     const SizedBox(height: 20),
-                    buildTextField(passwordController, 'Password', 'Please enter your password'),
+                    buildTextField(passwordController, 'Password',
+                        'Please enter your password'),
                     const SizedBox(height: 20),
-                    buildTextField(phoneController, 'Phone Number', 'Please enter your phone number'),
+                    buildTextField(phoneController, 'Phone Number',
+                        'Please enter your phone number'),
                     const SizedBox(height: 20),
-                    buildTextField(cityController, 'City', 'Please enter your city'),
+                    buildTextField(
+                        cityController, 'City', 'Please enter your city'),
                     const SizedBox(height: 20),
-                    buildTextField(regionController, 'Region', 'Please enter your region'),
+                    buildTextField(
+                        regionController, 'Region', 'Please enter your region'),
                     const SizedBox(height: 20),
-                    buildTextField(countryController, 'Country', 'Please enter your country'),
+                    buildTextField(countryController, 'Country',
+                        'Please enter your country'),
                     const SizedBox(height: 20),
                     buildDropdownField(
                       'Route',
                       ['Route A', 'Route B', 'Route C'],
                       selectedRoute,
-                          (value) {
+                      (value) {
                         setState(() {
                           selectedRoute = value;
                         });
                       },
-                          (value) => value != null && value.isNotEmpty
+                      (value) => value != null && value.isNotEmpty
                           ? null
                           : 'Please select a route',
                     ),
@@ -140,21 +148,22 @@ class _UserRegistrationState extends State<UserRegistration> {
                       color: AppColor.deepBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 30),
                       child: _isLoading
                           ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.white,
-                          color: Colors.black,
-                          strokeWidth: 2,
-                        ),
-                      )
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.white,
+                                color: Colors.black,
+                                strokeWidth: 2,
+                              ),
+                            )
                           : const Text(
-                        "Submit",
-                        style: TextStyle(color: Colors.white),
-                      ),
+                              "Submit",
+                              style: TextStyle(color: Colors.white),
+                            ),
                     ),
                     const SizedBox(height: 20),
                     Row(
@@ -167,7 +176,8 @@ class _UserRegistrationState extends State<UserRegistration> {
                         const SizedBox(width: 5),
                         InkWell(
                           onTap: () {
-                            Navigator.of(context).pushReplacementNamed('/login');
+                            Navigator.of(context)
+                                .pushReplacementNamed('/login');
                           },
                           child: const Text(
                             'Login',
@@ -186,8 +196,8 @@ class _UserRegistrationState extends State<UserRegistration> {
     );
   }
 
-  Widget buildTextField(TextEditingController controller, String labelText,
-      String errorText,
+  Widget buildTextField(
+      TextEditingController controller, String labelText, String errorText,
       {String? Function(String?)? validator}) {
     return FadeInDown(
       delay: const Duration(milliseconds: 200),
@@ -199,9 +209,8 @@ class _UserRegistrationState extends State<UserRegistration> {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        validator: validator ?? (value) => value != null && value.isNotEmpty
-            ? null
-            : errorText,
+        validator: validator ??
+            (value) => value != null && value.isNotEmpty ? null : errorText,
       ),
     );
   }
@@ -225,9 +234,10 @@ class _UserRegistrationState extends State<UserRegistration> {
             child: Text(value),
           );
         }).toList(),
-        validator: validator ?? (value) => value != null && value.isNotEmpty
-            ? null
-            : 'Please select a $labelText',
+        validator: validator ??
+            (value) => value != null && value.isNotEmpty
+                ? null
+                : 'Please select a $labelText',
       ),
     );
   }
@@ -257,8 +267,10 @@ class _UserRegistrationState extends State<UserRegistration> {
                     });
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: selectedTripType == 'One Time' ? AppColor.deepBlue : Colors.grey.shade300,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white,
+                    backgroundColor: selectedTripType == 'One Time'
+                        ? AppColor.deepBlue
+                        : Colors.grey.shade300,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -275,8 +287,10 @@ class _UserRegistrationState extends State<UserRegistration> {
                     });
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: selectedTripType == 'Round Trip' ? AppColor.deepBlue : Colors.grey.shade300,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white,
+                    backgroundColor: selectedTripType == 'Round Trip'
+                        ? AppColor.deepBlue
+                        : Colors.grey.shade300,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
