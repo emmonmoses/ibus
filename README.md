@@ -8,7 +8,7 @@ Some UI may still not work correctly in IOS. Clone the appropriate branch below:
 
 * For App: muluken
 * For Web: dawit
-* For Api: usman or emmon
+* For Api: usman
 
 ## How to Use 
 **Step 1:**
@@ -54,7 +54,7 @@ flutter run
 Go to project root and execute the following command in console to get the required dependencies: 
 
 ```
-NPM install 
+npm install 
 ```
 
 **Step 6: WEB**
@@ -70,7 +70,7 @@ ng serve --open --browser chrome --port 4300
 Go to project root and execute the following command in console to get the required dependencies: 
 
 ```
-NPM install 
+npm install 
 ```
 
 **Step 8: API**
@@ -78,5 +78,9 @@ NPM install
 This project uses `nodemon` package, execute the following command to run the project:
 
 ```
-nodemon app.js
+npm start -- run in production mode
+```
+
+```
+npm run dev -- run in development mode
 ```

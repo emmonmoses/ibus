@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 
 const adminSchema = new mongoose.Schema(
   {
+    // phone: {
+    //   code: {
+    //     type: String,
+    //   },
+    //   number: {
+    //     type: Number,
+    //   },
+    // },
     code: {
       type: String,
     },

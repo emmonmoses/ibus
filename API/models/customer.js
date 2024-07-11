@@ -6,6 +6,18 @@ const customerSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Role",
     },
+    routeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Route",
+    },
+    timingId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Timing",
+    },
+    tripTypeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TripType",
+    },
     code: {
       type: String,
     },
@@ -56,6 +68,9 @@ const customerSchema = new mongoose.Schema(
       transform: function (doc, ret) {
         delete ret._id;
         delete ret.roleId;
+        delete ret.routeId;
+        delete ret.timingId;
+        delete ret.tripTypeId;
         delete ret.password;
       },
     },
@@ -64,6 +79,9 @@ const customerSchema = new mongoose.Schema(
       transform: function (doc, ret) {
         delete ret._id;
         delete ret.roleId;
+        delete ret.routeId;
+        delete ret.timingId;
+        delete ret.tripTypeId;
         delete ret.password;
       },
     },
@@ -81,4 +99,24 @@ customerSchema.virtual("role", {
   justOne: true,
 });
 
+customerSchema.virtual("route", {
+  ref: "Route",
+  localField: "routeId",
+  foreignField: "_id",
+  justOne: true,
+});
+
+customerSchema.virtual("time", {
+  ref: "Timing",
+  localField: "timingId",
+  foreignField: "_id",
+  justOne: true,
+});
+
+customerSchema.virtual("tripType", {
+  ref: "TripType",
+  localField: "tripTypeId",
+  foreignField: "_id",
+  justOne: true,
+});
 module.exports = mongoose.model("Customer", customerSchema);

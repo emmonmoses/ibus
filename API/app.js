@@ -1,4 +1,17 @@
-require("dotenv").config();
+const dotenv = require('dotenv');
+
+// Load environment variables based on NODE_ENV
+// Default to .env file
+let envFileName = '.env'; 
+
+if (process.env.NODE_ENV === 'production') {
+  envFileName = '.env.production';
+} else if (process.env.NODE_ENV === 'development') {
+  envFileName = '.env.development';
+}
+
+dotenv.config({ path: envFileName });
+
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
