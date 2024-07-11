@@ -174,7 +174,7 @@ class _HeaderPartsState extends State<HeaderParts> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children:  [
           Text(
             "Weyeyet Transport",
             style: TextStyle(
