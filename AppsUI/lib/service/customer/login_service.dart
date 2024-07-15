@@ -37,7 +37,8 @@ class LoginService {
         return loginResponse;
       } else if (response.statusCode == 400) {
         var errorJson = jsonDecode(response.body);
-        var errorMessage = errorJson['message'] ?? 'Login failed. Please try again.';
+        var errorMessage =
+            errorJson['message'] ?? 'Login failed. Please try again.';
         throw Exception(errorMessage);
       } else {
         throw Exception('Failed to login. Status code: ${response.statusCode}');
