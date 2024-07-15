@@ -63,13 +63,6 @@ module.exports = {
       var vehicle = await Vehicle.findById(body.vehicleId);
       var tripType = await TripType.findById(body.tripTypeId);
 
-      const driver = await Driver.find({
-        routeId: body.routeId,
-        timingId: body.timingId,
-        vehicleId: body.vehicleId,
-        tripTypeId: body.tripTypeId,
-      });
-
       if (!route) {
         return Response.customResponse(
           res,
@@ -102,6 +95,13 @@ module.exports = {
         );
       }
 
+      const driver = await Driver.find({
+        routeId: route._id,
+        timingId: timing._id,
+        vehicleId: vehicle._id,
+        tripTypeId: tripType._id,
+      });
+
       if (!driver) {
         return Response.customResponse(
           res,
@@ -109,7 +109,7 @@ module.exports = {
           ResponseMessage.NO_DRIVER_RECORD
         );
       } else {
-        assignedDriver = body.driverId;
+        assignedDriver = driver._id;
       }
 
       const uniqueCode = unique.randomCode();

@@ -6,9 +6,10 @@ module.exports = {
   },
 
   errorResponse: (res, statusCode, error) => {
-    return res.status(statusCode).json({
-      message: error.message,
-    });
+    return res.status(statusCode).json(
+      // message: error.message,
+      error
+    );
   },
 
   successResponse: (res, statusCode, model) => {
